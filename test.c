@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/08 20:44:27 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/08 22:44:33 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,13 +24,13 @@ int main(void)
     char *map[5] = 
 	{
         "11111111111",
-        "1000000C0E1",
-        "1000000C0E1",
-        "1000000P0E1",
+        "1000000C001",
+        "1000000C001",
+        "10P00000001",
         "11111111111"
     };
 
-    mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So Long", false);
+    mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", false);
     if (!mlx)
     {
         return 1;
@@ -61,14 +61,14 @@ int main(void)
     {
         for (int x = 0; x < 11; x++)
         {
-            if (map[y][x] == '1') // Mur
-            {
-                mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
-            }
-			else if (map[y][x] == '0')
+			if (map[y][x] == '0' )
 			{
 				mlx_image_to_window(mlx, img1, x * TILE_SIZE, y * TILE_SIZE);
 			}
+            else if (map[y][x] == '1') // Mur
+            {
+                mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
+            }
             // Ajouter ici les autres cas (0, C, E, P) avec leurs images respectives
         }
     }
@@ -78,6 +78,12 @@ int main(void)
 
     return 0;
 }
+
+// int		close_window(t_env *env)
+// {
+// 	exit_game(env, 0);
+// 	return(0);
+// }
 
 
 // #include <stdio.h>
