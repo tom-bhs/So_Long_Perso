@@ -6,30 +6,23 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/08 22:44:33 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:28:24 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-
 #include "MLX42/include/MLX42/MLX42.h"
+#include "src/get_next_line.h"
 #include <stdbool.h>
 
-#define WIN_WIDTH 500
+#define WIN_WIDTH 700
 #define WIN_HEIGHT 300
 #define TILE_SIZE 16
 
 int main(void)
 {
     mlx_t* mlx;
-    char *map[5] = 
-	{
-        "11111111111",
-        "1000000C001",
-        "1000000C001",
-        "10P00000001",
-        "11111111111"
-    };
-
+    char *map;
+    int y = 0;
     mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", false);
     if (!mlx)
     {
@@ -39,6 +32,7 @@ int main(void)
     // Charger une image (remplacer avec votre propre image)
 	mlx_texture_t* texture = mlx_load_png("png/Tree.png");
 	mlx_texture_t* texture1 = mlx_load_png("png/Grass2.png");
+    mlx_texture_t* texture2 = mlx_load_png("png/Dirt.png");
 	if (!texture || !texture1)
     {
         mlx_terminate(mlx);
@@ -49,35 +43,56 @@ int main(void)
     mlx_delete_texture(texture); // Nettoyer la texture après usage
 	mlx_image_t* img1 = mlx_texture_to_image(mlx, texture1);
     mlx_delete_texture(texture1);
+    mlx_image_t* img2 = mlx_texture_to_image(mlx, texture2);
+    mlx_delete_texture(texture2);
 
     if (!img)
     {
         mlx_terminate(mlx);
         return 1;
     }
+    int fd = open("BER/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
 
-    // Affichage de la carte
-    for (int y = 0; y < 5; y++)
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		return (1);
+	}
+    while ((map = get_next_line(fd)) != NULL)
     {
-        for (int x = 0; x < 11; x++)
+        int x = 0;
+        while (map[x] != '\0')
         {
-			if (map[y][x] == '0' )
+            if (map[x] == '1') // Mur
+            {
+                mlx_image_to_window(mlx, img2, x * TILE_SIZE, y * TILE_SIZE);
+            }
+			if (map[x] == '0' )
 			{
 				mlx_image_to_window(mlx, img1, x * TILE_SIZE, y * TILE_SIZE);
 			}
-            else if (map[y][x] == '1') // Mur
+            else if (map[x] == '1') // Mur
             {
                 mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
             }
-            // Ajouter ici les autres cas (0, C, E, P) avec leurs images respectives
+            x++;
         }
+        y++;
+        free(map);
     }
-
+    close(fd);
+    // Affichage de la carte
     mlx_loop(mlx);
     mlx_terminate(mlx);
 
     return 0;
 }
+
+
+
+
+
+
 
 // int		close_window(t_env *env)
 // {

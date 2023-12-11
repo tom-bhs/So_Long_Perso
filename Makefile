@@ -5,7 +5,7 @@ LIBMLX	:= MLX42
 HEADERS	:= -I ./include -I $(LIBMLX)/include
 LIBS	:= $(LIBMLX)/build/libmlx42.a -ldl -lglfw -pthread -lm
 SRCS	:= 	test.c \
-			mouv_perso.c 
+			#mouv_perso.c 
 
 OBJS	:= ${SRCS:.c=.o}
 
