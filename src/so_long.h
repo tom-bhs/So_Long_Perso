@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 17:26:22 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:21:37 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,5 +20,7 @@
 # include <string.h>
 
 void ft_hook(void* param);
+int main(void);
+// void draw_image(app_t *app);
 
 #endif

@@ -6,30 +6,64 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 17:35:24 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:21:27 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/include/MLX42/MLX42.h"
 #include "src/so_long.h"
+#include <stdbool.h>
 
-static mlx_image_t* image;
+// typedef struct
+// {
+//     void *mlx_ptr;
+//     void *win_ptr;
+//     void *img_ptr;
+//     int x;
+//     int y;
+// } 
+// app_t;
 
-void mlx_hook(void* param)
+// void draw_image(app_t *app)
+// {
+//     mlx_clear_window(app->mlx_ptr, app->win_ptr);
+//     mlx_put_image_to_window(app->mlx_ptr, app->win_ptr, app->img_ptr, app->x, app->y);
+// }
+
+void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
+	mlx_texture_t* texture4 = mlx_load_png("png/king.png");
+	mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
+    mlx_delete_texture(texture4);
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-		image->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-		image->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-		image->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-		image->instances[0].x += 5;
+	if (mlx_is_key_down(mlx, 65362))
+		img4->instances[0].y -= 5;
+	if (mlx_is_key_down(mlx, 65364))
+		img4->instances[0].y += 5;
+	if (mlx_is_key_down(mlx, 65361))
+		img4->instances[0].x -= 5;
+	if (mlx_is_key_down(mlx, 65363))
+		img4->instances[0].x += 5;
 }
+
+// void mlx_hook(void* param)
+// {
+// 	mlx_t* mlx = param;
+
+// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+// 		mlx_close_window(mlx);
+// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+// 		image->instances[0].y -= 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+// 		image->instances[0].y += 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+// 		image->instances[0].x -= 5;
+// 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+// 		image->instances[0].x += 5;
+// }
 
 
 

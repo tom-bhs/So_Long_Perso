@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 19:27:18 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 22:07:10 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,7 +98,7 @@ int main(void)
 			{
 				mlx_image_to_window(mlx, img3, x * TILE_SIZE, y * TILE_SIZE);
 			}
-            if (map[x] == 'P' ) // texture4 = depart
+            if (map[x] == 'P' ) // texture4 = king kong
 			{
 				mlx_image_to_window(mlx, img4, x * TILE_SIZE, y * TILE_SIZE);
 			}
@@ -110,7 +110,7 @@ int main(void)
 			{
 				mlx_image_to_window(mlx, img6, x * TILE_SIZE, y * TILE_SIZE);
 			}
-			if (map[x] == 'F' ) // texture6 = feux
+			if (map[x] == 'F' ) // texture = feux
 			{
 				mlx_image_to_window(mlx, img7, x * TILE_SIZE, y * TILE_SIZE);
 			}
