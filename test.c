@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 16:28:24 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 16:50:44 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ int main(void)
         mlx_terminate(mlx);
         return 1;
     }
-    int fd = open("BER/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
+    int fd = open("maps/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
 
 	if (fd == -1)
 	{
