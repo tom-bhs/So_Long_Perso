@@ -1,14 +1,37 @@
-// /* ************************************************************************** */
-// /*                                                                            */
-// /*                                                        :::      ::::::::   */
-// /*   mouv_perso.c                                       :+:      :+:    :+:   */
-// /*                                                    +:+ +:+         +:+     */
-// /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
-// /*                                                +#+#+#+#+#+   +#+           */
-// /*   Created: 2023/12/08 20:49:44 by tbihoues          #+#    #+#             */
-// /*   Updated: 2023/12/08 22:43:50 by tbihoues         ###   ########.fr       */
-// /*                                                                            */
-// /* ************************************************************************** */
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   mouv_perso.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
+/*   Updated: 2023/12/11 17:35:24 by tbihoues         ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
+#include "MLX42/include/MLX42/MLX42.h"
+#include "src/so_long.h"
+
+static mlx_image_t* image;
+
+void mlx_hook(void* param)
+{
+	mlx_t* mlx = param;
+
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+	if (mlx_is_key_down(mlx, MLX_KEY_UP))
+		image->instances[0].y -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
+		image->instances[0].y += 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
+		image->instances[0].x -= 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
+		image->instances[0].x += 5;
+}
+
+
 
 // #include "MLX42/include/MLX42/MLX42.h"
 // #include <stdbool.h>

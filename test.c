@@ -6,12 +6,13 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 16:50:44 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:26:47 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/include/MLX42/MLX42.h"
 #include "src/get_next_line.h"
+#include "src/so_long.h"
 #include <stdbool.h>
 
 #define WIN_WIDTH 700
@@ -30,10 +31,15 @@ int main(void)
     }
 
     // Charger une image (remplacer avec votre propre image)
-	mlx_texture_t* texture = mlx_load_png("png/Tree.png");
-	mlx_texture_t* texture1 = mlx_load_png("png/Grass2.png");
-    mlx_texture_t* texture2 = mlx_load_png("png/Dirt.png");
-	if (!texture || !texture1)
+	mlx_texture_t* texture = mlx_load_png("png/black.png");
+	mlx_texture_t* texture1 = mlx_load_png("png/wall.png");
+    mlx_texture_t* texture2 = mlx_load_png("png/banana.png");
+    mlx_texture_t* texture3 = mlx_load_png("png/door.png");
+    mlx_texture_t* texture4 = mlx_load_png("png/neg.png");
+	mlx_texture_t* texture5 = mlx_load_png("png/ladder.png");
+
+
+	if (!texture || !texture1 || !texture2 || !texture3 || !texture4 || !texture5)
     {
         mlx_terminate(mlx);
         return 1;
@@ -45,6 +51,12 @@ int main(void)
     mlx_delete_texture(texture1);
     mlx_image_t* img2 = mlx_texture_to_image(mlx, texture2);
     mlx_delete_texture(texture2);
+	mlx_image_t* img3 = mlx_texture_to_image(mlx, texture3);
+    mlx_delete_texture(texture3);
+	mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
+    mlx_delete_texture(texture4);
+	mlx_image_t* img5 = mlx_texture_to_image(mlx, texture5);
+    mlx_delete_texture(texture5);
 
     if (!img)
     {
@@ -63,18 +75,30 @@ int main(void)
         int x = 0;
         while (map[x] != '\0')
         {
-            if (map[x] == '1') // Mur
-            {
-                mlx_image_to_window(mlx, img2, x * TILE_SIZE, y * TILE_SIZE);
-            }
-			if (map[x] == '0' )
+			if (map[x] == '1' ) // texture1 = mur
 			{
-				mlx_image_to_window(mlx, img1, x * TILE_SIZE, y * TILE_SIZE);
+				mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
 			}
-            else if (map[x] == '1') // Mur
+            if (map[x] == '0') // texture = sol
             {
-                mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
+                mlx_image_to_window(mlx, img1, x * TILE_SIZE, y * TILE_SIZE);
             }
+            if (map[x] == 'C' ) // texture2 = collectable
+			{
+				mlx_image_to_window(mlx, img2, x * TILE_SIZE, y * TILE_SIZE);
+			}
+            if (map[x] == 'E' ) // texture3 = sortie
+			{
+				mlx_image_to_window(mlx, img3, x * TILE_SIZE, y * TILE_SIZE);
+			}
+            if (map[x] == 'P' ) // texture4 = depart
+			{
+				mlx_image_to_window(mlx, img4, x * TILE_SIZE, y * TILE_SIZE);
+			}
+			if (map[x] == 'Y' ) // texture4 = depart
+			{
+				mlx_image_to_window(mlx, img5, x * TILE_SIZE, y * TILE_SIZE);
+			}
             x++;
         }
         y++;
@@ -87,8 +111,6 @@ int main(void)
 
     return 0;
 }
-
-
 
 
 
