@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 18:26:47 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/11 18:40:09 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,8 +15,8 @@
 #include "src/so_long.h"
 #include <stdbool.h>
 
-#define WIN_WIDTH 700
-#define WIN_HEIGHT 300
+#define WIN_WIDTH 800
+#define WIN_HEIGHT 400
 #define TILE_SIZE 16
 
 int main(void)
@@ -31,15 +31,15 @@ int main(void)
     }
 
     // Charger une image (remplacer avec votre propre image)
-	mlx_texture_t* texture = mlx_load_png("png/black.png");
-	mlx_texture_t* texture1 = mlx_load_png("png/wall.png");
+	mlx_texture_t* texture = mlx_load_png("png/wall.png");
+	mlx_texture_t* texture1 = mlx_load_png("png/black.png");
     mlx_texture_t* texture2 = mlx_load_png("png/banana.png");
     mlx_texture_t* texture3 = mlx_load_png("png/door.png");
-    mlx_texture_t* texture4 = mlx_load_png("png/neg.png");
+    mlx_texture_t* texture4 = mlx_load_png("png/pixil.png");
 	mlx_texture_t* texture5 = mlx_load_png("png/ladder.png");
+	//mlx_texture_t* texture6 = mlx_load_png("png/block.png");
 
-
-	if (!texture || !texture1 || !texture2 || !texture3 || !texture4 || !texture5)
+	if (!texture || !texture1 || !texture2 || !texture3 || !texture4 || !texture5) //!texture6
     {
         mlx_terminate(mlx);
         return 1;
@@ -57,6 +57,8 @@ int main(void)
     mlx_delete_texture(texture4);
 	mlx_image_t* img5 = mlx_texture_to_image(mlx, texture5);
     mlx_delete_texture(texture5);
+	//mlx_image_t* img6 = mlx_texture_to_image(mlx, texture6);
+    //mlx_delete_texture(texture6);
 
     if (!img)
     {
@@ -95,10 +97,14 @@ int main(void)
 			{
 				mlx_image_to_window(mlx, img4, x * TILE_SIZE, y * TILE_SIZE);
 			}
-			if (map[x] == 'Y' ) // texture4 = depart
+			if (map[x] == 'Y' ) // texture5 = echelle
 			{
 				mlx_image_to_window(mlx, img5, x * TILE_SIZE, y * TILE_SIZE);
 			}
+			// if (map[x] == 'W' ) // texture6 = support
+			// {
+			// 	mlx_image_to_window(mlx, img6, x * TILE_SIZE, y * TILE_SIZE);
+			// }
             x++;
         }
         y++;
