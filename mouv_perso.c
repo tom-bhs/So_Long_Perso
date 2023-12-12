@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   mouv_perso.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
+/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 22:21:27 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/12 15:53:41 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,20 +33,21 @@
 void ft_hook(void* param)
 {
 	mlx_t* mlx = param;
-	mlx_texture_t* texture4 = mlx_load_png("png/king.png");
-	mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
+    mlx_texture_t* texture4 = mlx_load_png("png/king.png");
+    mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
     mlx_delete_texture(texture4);
 
 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
 		mlx_close_window(mlx);
-	if (mlx_is_key_down(mlx, 65362))
-		img4->instances[0].y -= 5;
-	if (mlx_is_key_down(mlx, 65364))
-		img4->instances[0].y += 5;
-	if (mlx_is_key_down(mlx, 65361))
-		img4->instances[0].x -= 5;
-	if (mlx_is_key_down(mlx, 65363))
-		img4->instances[0].x += 5;
+	if (mlx_is_key_down(mlx, MLX_KEY_W))
+		character.y -= 1;
+	if (mlx_is_key_down(mlx, MLX_KEY_S))
+		character.y += 1;
+	if (mlx_is_key_down(mlx, MLX_KEY_A))
+		character.x -= 1;
+	if (mlx_is_key_down(mlx, MLX_KEY_D))
+		character.x += 1;
+    mlx_image_to_window(mlx, img4, character.x * TILE_SIZE, character.y * TILE_SIZE);
 }
 
 // void mlx_hook(void* param)

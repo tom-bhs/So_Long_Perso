@@ -1,38 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   so_long.h                                          :+:      :+:    :+:   */
+/*   get_next_line.h                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/12 15:58:18 by vabaud           ###   ########.fr       */
+/*   Created: 2023/11/16 01:12:03 by vabaud            #+#    #+#             */
+/*   Updated: 2023/12/09 19:46:40 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#ifndef SO_LONG_H
-# define SO_LONG_H
-
-# define TILE_SIZE 16
-
-# include <stdio.h>
-# include <unistd.h>
-# include <stdlib.h>
+#ifndef GET_NEXT_LINE_H
+# define GET_NEXT_LINE_H
 # include <fcntl.h>
-# include <string.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "get_next_line.h"
-# include <stdbool.h>
+# include <stdarg.h>
+# include <stdio.h>
+# include <stdlib.h>
+# include <unistd.h>
 
-typedef struct {
-    float x, y;
-    mlx_texture_t *texture;
-} Character;
+# ifndef BUFFER_SIZE
+#  define BUFFER_SIZE 1000
+# endif
 
-static Character character;
-
-void ft_hook(void* param);
-int main(void);
-// void draw_image(app_t *app);
+char				*get_next_line(int fd);
+size_t				ft_strlen(const char *s);
+char				*ft_strjoin(char *s1, char *s2, size_t len_s1,
+						size_t len_s2);
+char				*ft_strchr(const char *s, int c);
+void				remove_until_newline(char *buffer);
 
 #endif

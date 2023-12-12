@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/11 22:07:10 by tbihoues         ###   ########.fr       */
+/*   Updated: 2023/12/12 18:39:32 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,29 +17,27 @@
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 400
-#define TILE_SIZE 16
 
 int main(void)
 {
     mlx_t* mlx;
     char *map;
     int y = 0;
-    mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", false);
+    mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", true);
     if (!mlx)
     {
         return 1;
     }
-
     // Charger une image (remplacer avec votre propre image)
-	mlx_texture_t* texture = mlx_load_png("png/rock.png");
-	mlx_texture_t* texture1 = mlx_load_png("png/back2.png");
+
+    mlx_texture_t* texture = mlx_load_png("png/rock.png");
+    mlx_texture_t* texture1 = mlx_load_png("png/back2.png");
     mlx_texture_t* texture2 = mlx_load_png("png/banana.png");
     mlx_texture_t* texture3 = mlx_load_png("png/door.png");
     mlx_texture_t* texture4 = mlx_load_png("png/king.png");
-	mlx_texture_t* texture5 = mlx_load_png("png/ladder.png");
-	mlx_texture_t* texture6 = mlx_load_png("png/bloc.png");
-	mlx_texture_t* texture7 = mlx_load_png("png/fire.png");
-
+    mlx_texture_t* texture5 = mlx_load_png("png/ladder.png");
+    mlx_texture_t* texture6 = mlx_load_png("png/bloc.png");
+    mlx_texture_t* texture7 = mlx_load_png("png/fire.png");
 
 	if (!texture || !texture1 || !texture2 || !texture3 || !texture4 || !texture5 || !texture6 || !texture7)
     {
@@ -47,23 +45,22 @@ int main(void)
         return 1;
     }
     // Charger une texture et l'appliquer sur l'image
-	mlx_image_t* img = mlx_texture_to_image(mlx, texture);
+    mlx_image_t* img = mlx_texture_to_image(mlx, texture);
     mlx_delete_texture(texture); // Nettoyer la texture après usage
-	mlx_image_t* img1 = mlx_texture_to_image(mlx, texture1);
+    mlx_image_t* img1 = mlx_texture_to_image(mlx, texture1);
     mlx_delete_texture(texture1);
     mlx_image_t* img2 = mlx_texture_to_image(mlx, texture2);
     mlx_delete_texture(texture2);
-	mlx_image_t* img3 = mlx_texture_to_image(mlx, texture3);
+    mlx_image_t* img3 = mlx_texture_to_image(mlx, texture3);
     mlx_delete_texture(texture3);
-	mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
+    mlx_image_t* img4 = mlx_texture_to_image(mlx, texture4);
     mlx_delete_texture(texture4);
-	mlx_image_t* img5 = mlx_texture_to_image(mlx, texture5);
+    mlx_image_t* img5 = mlx_texture_to_image(mlx, texture5);
     mlx_delete_texture(texture5);
-	mlx_image_t* img6 = mlx_texture_to_image(mlx, texture6);
+    mlx_image_t* img6 = mlx_texture_to_image(mlx, texture6);
     mlx_delete_texture(texture6);
-	mlx_image_t* img7 = mlx_texture_to_image(mlx, texture7);
+    mlx_image_t* img7 = mlx_texture_to_image(mlx, texture7);
     mlx_delete_texture(texture7);
-
 
     if (!img)
     {
@@ -83,51 +80,34 @@ int main(void)
         while (map[x] != '\0')
         {
 			if (map[x] == '1' ) // texture1 = mur
-			{
 				mlx_image_to_window(mlx, img, x * TILE_SIZE, y * TILE_SIZE);
-			}
-            if (map[x] == '0') // texture = sol
-            {
+            if (map[x] == '0' || map[x] == 'C' || map[x] == 'Y' || map[x] == 'W' || map[x] == 'F') // texture = sol
                 mlx_image_to_window(mlx, img1, x * TILE_SIZE, y * TILE_SIZE);
-            }
             if (map[x] == 'C' ) // texture2 = collectable
-			{
 				mlx_image_to_window(mlx, img2, x * TILE_SIZE, y * TILE_SIZE);
-			}
             if (map[x] == 'E' ) // texture3 = sortie
-			{
 				mlx_image_to_window(mlx, img3, x * TILE_SIZE, y * TILE_SIZE);
-			}
             if (map[x] == 'P' ) // texture4 = king kong
-			{
 				mlx_image_to_window(mlx, img4, x * TILE_SIZE, y * TILE_SIZE);
-			}
 			if (map[x] == 'Y' ) // texture5 = echelle
-			{
 				mlx_image_to_window(mlx, img5, x * TILE_SIZE, y * TILE_SIZE);
-			}
 			if (map[x] == 'W' ) // texture6 = support
-			{
 				mlx_image_to_window(mlx, img6, x * TILE_SIZE, y * TILE_SIZE);
-			}
 			if (map[x] == 'F' ) // texture = feux
-			{
 				mlx_image_to_window(mlx, img7, x * TILE_SIZE, y * TILE_SIZE);
-			}
-            x++;
+            x += 1;
         }
-        y++;
+        y += 1;
         free(map);
     }
     close(fd);
     // Affichage de la carte
+    mlx_loop_hook(mlx, ft_hook, mlx);
     mlx_loop(mlx);
     mlx_terminate(mlx);
 
     return 0;
 }
-
-
 
 
 
@@ -181,7 +161,7 @@ int main(void)
 // 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
 // 		image->instances[0].y -= 5;
 // 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-// 		image->instances[0].y += 5;
+//  	image->instances[0].y += 5;
 // 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
 // 		image->instances[0].x -= 5;
 // 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
