@@ -6,7 +6,7 @@
 /*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/12 15:58:18 by vabaud           ###   ########.fr       */
+/*   Updated: 2023/12/13 19:05:18 by vabaud           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,15 +24,22 @@
 # include "get_next_line.h"
 # include <stdbool.h>
 
-typedef struct {
-    float x, y;
-    mlx_texture_t *texture;
-} Character;
+typedef struct txt_inf{
+    mlx_texture_t* texture;
+    mlx_image_t* img;
+} TextureInfo;
 
-static Character character;
+typedef struct lmp{
+    char** mapp;
+} lamap;
+
+extern lamap mapy;
+extern TextureInfo textureInfoArray[8];
 
 void ft_hook(void* param);
 int main(void);
+int isPositionValid(int x, int y);
+void aff_map(int fd, mlx_t *mlx);
 // void draw_image(app_t *app);
 
 #endif
