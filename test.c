@@ -6,7 +6,7 @@
 /*   By: parallels <parallels@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/16 17:13:01 by parallels        ###   ########.fr       */
+/*   Updated: 2023/12/26 14:23:47 by parallels        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,18 +18,37 @@
 #include <unistd.h>
 #include <sys/time.h> 
 
+
+//jai ajouter la fonction pour atoriser a monter que sil est surt lechelle sinon il ne monte pas 
+// je vais maintenant voir pour les consomables 
+
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 400
 
 TextureInfo textureInfoArray[8];
-
+int canClimbLadder(int x, int y);
 
 int isPositionValid(int x, int y) {
-    // Vérifiez si la nouvelle position (x, y) ne correspond pas à un mur (représenté par '1' dans la carte)
     int mapX = x / 16;
     int mapY = y / 16;
-    printf("%c\n", mapy.mapp[mapY][mapX]);
-    return mapy.mapp[mapY][mapX] != '1';
+    char currentTile = mapy.mapp[mapY][mapX];
+
+    if (currentTile != 'W' && currentTile != '1') {
+        if (currentTile == 'Y') {
+            // monter que si la case cest echelle ('Y')
+            if (!canClimbLadder(x, y)) {
+                return 0;
+            }
+        }
+        return 1; // position valide
+    }
+    return 0; // position non valide (mur)
+}
+
+int canClimbLadder(int x, int y) {
+    int mapX = x / 16;
+    int mapY = y / 16;
+    return (mapy.mapp[mapY][mapX] == 'Y');
 }
 
 unsigned long long getCurrentTimeInMilliseconds() {
@@ -45,36 +64,39 @@ void ft_hook(void* param) {
         mlx_close_window(mlx);
 
     static unsigned long long lastMoveTime = 0;
-    unsigned long long currentTime = getCurrentTimeInMilliseconds(100); // Vous devez implémenter cette fonction
+    unsigned long long currentTime = getCurrentTimeInMilliseconds(100);
 
-    int moveAmount = 16; // Réduisez la quantité de déplacement souhaitée
+    int moveAmount = 16;
     int newX = textureInfoArray[4].img->instances->x;
     int newY = textureInfoArray[4].img->instances->y;
 
-    if (currentTime - lastMoveTime >= 400) { // Attendre 300 millisecondes (0.3 secondes) entre chaque déplacement
-        if (mlx_is_key_down(mlx, MLX_KEY_W) && (newY - moveAmount != textureInfoArray[0].img->instances->y)) {
-            newY -= moveAmount;
+    if (currentTime - lastMoveTime >= 350) {
+        if (mlx_is_key_down(mlx, MLX_KEY_W)) {
+            int mapX = newX / 16;
+            int mapY = (newY - moveAmount) / 16;
+
+            // Vérifiez si la nouvelle position est sur une échelle ('Y')
+            if (mapy.mapp[mapY][mapX] == 'Y') {
+                newY -= moveAmount; // Permet la montée sur l'échelle
+            }
         }
-        if (mlx_is_key_down(mlx, MLX_KEY_S) && (newY + moveAmount != textureInfoArray[0].img->instances->y)) {
+        if (mlx_is_key_down(mlx, MLX_KEY_S)) {
             newY += moveAmount;
         }
-        if (mlx_is_key_down(mlx, MLX_KEY_A) && (newX - moveAmount != textureInfoArray[0].img->instances->x)) {
+        if (mlx_is_key_down(mlx, MLX_KEY_A)) {
             newX -= moveAmount;
         }
-        if (mlx_is_key_down(mlx, MLX_KEY_D) && (newX + moveAmount != textureInfoArray[0].img->instances->x)) {
+        if (mlx_is_key_down(mlx, MLX_KEY_D)) {
             newX += moveAmount;
         }
 
-        // Vérifier la collision avec les murs
         if (isPositionValid(newX, newY)) {
-            // Mettre à jour la position du personnage uniquement si la nouvelle position est valide
             textureInfoArray[4].img->instances->x = newX;
             textureInfoArray[4].img->instances->y = newY;
             lastMoveTime = currentTime;
         }
     }
 }
-
 
 void initializeTextures(mlx_t* mlx) {
     int i = 0;
@@ -87,138 +109,33 @@ void initializeTextures(mlx_t* mlx) {
     textureInfoArray[6].texture = mlx_load_png("png/bloc.png");
     textureInfoArray[7].texture = mlx_load_png("png/fire.png");
 
-    while (i < 8)
-    {
+    while (i < 8) {
         textureInfoArray[i].img = mlx_texture_to_image(mlx, textureInfoArray[i].texture);
         mlx_delete_texture(textureInfoArray[i].texture);
         i++;
     }
 }
 
-int main(void)
-{
+int main(void) {
     mlx_t* mlx;
 
     mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", true);
-    if (!mlx)
-    {
+    if (!mlx) {
         return 1;
     }
     initializeTextures(mlx);
     int fd = open("maps/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
 
-	if (fd == -1)
-	{
-		perror("Error opening file");
-		return (1);
-	}
+    if (fd == -1) {
+        perror("Error opening file");
+        return 1;
+    }
     aff_map(fd, mlx);
     close(fd);
-    // Affichage de la carte
+
     mlx_loop_hook(mlx, ft_hook, mlx);
     mlx_loop(mlx);
     mlx_terminate(mlx);
 
     return 0;
 }
-
-
-
-
-
-// int		close_window(t_env *env)
-// {
-// 	exit_game(env, 0);
-// 	return(0);
-// }
-
-
-// #include <stdio.h>
-// #include <stdlib.h>
-// #include <stdbool.h>
-// #include "MLX42/include/MLX42/MLX42.h"
-
-// #define WIDTH 512
-// #define HEIGHT 512
-
-// static mlx_image_t* image;
-
-// // -----------------------------------------------------------------------------
-
-// int32_t ft_pixel(int32_t r, int32_t g, int32_t b, int32_t a)
-// {
-//     return (r << 24 | g << 16 | b << 8 | a);
-// }
-
-// void ft_randomize()
-// {
-// 	for (uint32_t i = 0; i < image->width; ++i)
-// 	{
-// 		for (uint32_t y = 0; y < image->height; ++y)
-// 		{
-// 			uint32_t color = ft_pixel(
-// 				0xFF, // R
-// 				0x00, // G
-// 				0x00, // B
-// 				0xFF  // A
-// 			);
-// 			mlx_put_pixel(image, i, y, color);
-// 		}
-// 	}
-// }
-
-// void ft_hook(void* param)
-// {
-// 	mlx_t* mlx = param;
-
-// 	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-// 		mlx_close_window(mlx);
-// 	if (mlx_is_key_down(mlx, MLX_KEY_UP))
-// 		image->instances[0].y -= 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_DOWN))
-//  	image->instances[0].y += 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_LEFT))
-// 		image->instances[0].x -= 5;
-// 	if (mlx_is_key_down(mlx, MLX_KEY_RIGHT))
-// 		image->instances[0].x += 5;
-// }
-
-// // -----------------------------------------------------------------------------
-
-// // void test()
-// // {
-// //     printf("une touche a ete pressee\n");
-// //     return;
-// // }
-
-// int32_t main()
-// {
-// 	mlx_t* mlx;
-
-// 	// Gotta error check this stuff
-// 	if (!(mlx = mlx_init(WIDTH, HEIGHT, "MLX42", true)))
-// 	{
-// 		puts(mlx_strerror(mlx_errno));
-// 		return(EXIT_FAILURE);
-// 	}
-// 	if (!(image = mlx_new_image(mlx, 128, 128)))
-// 	{
-// 		mlx_close_window(mlx);
-// 		puts(mlx_strerror(mlx_errno));
-// 		return(EXIT_FAILURE);
-// 	}
-// 	if (mlx_image_to_window(mlx, image, 0, 0) == -1)
-// 	{
-// 		mlx_close_window(mlx);
-// 		puts(mlx_strerror(mlx_errno));
-// 		return(EXIT_FAILURE);
-// 	}
-	
-// 	mlx_loop_hook(mlx, ft_randomize, mlx);
-// 	mlx_loop_hook(mlx, ft_hook, mlx);
-//     //mlx_key_hook(mlx, test, NULL);
-
-// 	mlx_loop(mlx);
-// 	mlx_terminate(mlx);
-// 	return (EXIT_SUCCESS);
-// }
