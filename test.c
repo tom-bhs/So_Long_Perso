@@ -6,7 +6,7 @@
 /*   By: parallels <parallels@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/26 14:23:47 by parallels        ###   ########.fr       */
+/*   Updated: 2024/01/10 09:18:15 by parallels        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,4 +138,27 @@ int main(void) {
     mlx_terminate(mlx);
 
     return 0;
+}
+
+#include <math.h>
+
+#define GRAVITY 10.0
+
+typedef struct {
+    double x, y, mass;
+    double ax, ay;
+} Object;
+
+void applyGravity(Object *obj1, Object *obj2) {
+    double dx = obj2->x - obj1->x;
+    double dy = obj2->y - obj1->y;
+    double dist_sq = dx * dx + dy * dy;
+
+    double F = GRAVITY * obj1->mass * obj2->mass / dist_sq;
+
+    obj1->ax += F * dx / (obj1->mass * sqrt(dist_sq));
+    obj1->ay += F * dy / (obj1->mass * sqrt(dist_sq));
+
+    obj2->ax -= F * dx / (obj2->mass * sqrt(dist_sq));
+    obj2->ay -= F * dy / (obj2->mass * sqrt(dist_sq));
 }
