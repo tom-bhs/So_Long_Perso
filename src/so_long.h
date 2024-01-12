@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   so_long.h                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: vabaud <vabaud@student.42.fr>              +#+  +:+       +#+        */
+/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2023/12/13 19:05:18 by vabaud           ###   ########.fr       */
+/*   Updated: 2024/01/12 18:44:29 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,17 +29,26 @@ typedef struct txt_inf{
     mlx_image_t* img;
 } TextureInfo;
 
-typedef struct lmp{
+typedef struct lmp {
     char** mapp;
 } lamap;
 
-extern lamap mapy;
-extern TextureInfo textureInfoArray[8];
+typedef struct s_barrel{
+	int x, y;
+	int frame;
+} t_barrel;
 
-void ft_hook(void* param);
-int main(void);
-int isPositionValid(int x, int y);
-void aff_map(int fd, mlx_t *mlx);
-// void draw_image(app_t *app);
+extern lamap mapy;
+extern TextureInfo textureInfoArray[13];
+
+void	ft_hook(void* param); 
+int		main(void);
+int		isPositionValid(int x, int y);
+void	aff_map(int fd, mlx_t *mlx);
+void	update_barrel_position(t_barrel *tonneau, int window_width, int largeur_tonneau);
+void	update_barrel_animation(t_barrel *tonneau);
+void	initialiser_tonneaux(t_barrel *tonneaux, int window_width, int start_y);
+void game_update(t_barrel *tonneaux, int window_width, int start_y);
+
 
 #endif

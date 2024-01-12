@@ -3,53 +3,23 @@
 /*                                                        :::      ::::::::   */
 /*   test.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: parallels <parallels@student.42.fr>        +#+  +:+       +#+        */
+/*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/10 09:18:15 by parallels        ###   ########.fr       */
+/*   Updated: 2024/01/12 15:45:01 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/include/MLX42/MLX42.h"
 #include "src/get_next_line.h"
 #include "src/so_long.h"
-#include <stdio.h>
 #include <stdbool.h>
-#include <unistd.h>
 #include <sys/time.h> 
-
-
-//jai ajouter la fonction pour atoriser a monter que sil est surt lechelle sinon il ne monte pas 
-// je vais maintenant voir pour les consomables 
 
 #define WIN_WIDTH 800
 #define WIN_HEIGHT 400
 
-TextureInfo textureInfoArray[8];
-int canClimbLadder(int x, int y);
-
-int isPositionValid(int x, int y) {
-    int mapX = x / 16;
-    int mapY = y / 16;
-    char currentTile = mapy.mapp[mapY][mapX];
-
-    if (currentTile != 'W' && currentTile != '1') {
-        if (currentTile == 'Y') {
-            // monter que si la case cest echelle ('Y')
-            if (!canClimbLadder(x, y)) {
-                return 0;
-            }
-        }
-        return 1; // position valide
-    }
-    return 0; // position non valide (mur)
-}
-
-int canClimbLadder(int x, int y) {
-    int mapX = x / 16;
-    int mapY = y / 16;
-    return (mapy.mapp[mapY][mapX] == 'Y');
-}
+TextureInfo textureInfoArray[13];
 
 unsigned long long getCurrentTimeInMilliseconds() {
     struct timeval tv;
@@ -57,45 +27,52 @@ unsigned long long getCurrentTimeInMilliseconds() {
     return (unsigned long long)(tv.tv_sec) * 1000 + (unsigned long long)(tv.tv_usec) / 1000;
 }
 
+int isPositionValid(int x, int y) {
+    // Vérifiez si la nouvelle position (x, y) ne correspond pas à un mur (représenté par '1' dans la carte)
+    int mapX = x / 16;
+    int mapY = y / 16;
+    if (mapy.mapp[mapY][mapX] != 'W' && mapy.mapp[mapY][mapX] != '1')
+        return 1;
+    return 0;
+}
+
+int notladder(int x, int y)
+{
+    int mapX = x / 16;
+    int mapY = y / 16;
+    if (mapy.mapp[mapY][mapX] != 'Y')
+        return 0;
+    return 1;
+}
+
 void ft_hook(void* param) {
-    mlx_t* mlx = param;
+	mlx_t* mlx = param;
 
-    if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
-        mlx_close_window(mlx);
-
-    static unsigned long long lastMoveTime = 0;
-    unsigned long long currentTime = getCurrentTimeInMilliseconds(100);
-
-    int moveAmount = 16;
-    int newX = textureInfoArray[4].img->instances->x;
-    int newY = textureInfoArray[4].img->instances->y;
-
-    if (currentTime - lastMoveTime >= 350) {
-        if (mlx_is_key_down(mlx, MLX_KEY_W)) {
-            int mapX = newX / 16;
-            int mapY = (newY - moveAmount) / 16;
-
-            // Vérifiez si la nouvelle position est sur une échelle ('Y')
-            if (mapy.mapp[mapY][mapX] == 'Y') {
-                newY -= moveAmount; // Permet la montée sur l'échelle
-            }
-        }
-        if (mlx_is_key_down(mlx, MLX_KEY_S)) {
-            newY += moveAmount;
-        }
-        if (mlx_is_key_down(mlx, MLX_KEY_A)) {
-            newX -= moveAmount;
-        }
-        if (mlx_is_key_down(mlx, MLX_KEY_D)) {
-            newX += moveAmount;
-        }
-
+	static unsigned long long lastMoveTime = 0;
+	unsigned long long currentTime = getCurrentTimeInMilliseconds();
+	if (mlx_is_key_down(mlx, MLX_KEY_ESCAPE))
+		mlx_close_window(mlx);
+	int newX = textureInfoArray[4].img->instances->x;
+	int newY = textureInfoArray[4].img->instances->y;
+	if (isPositionValid(newX, newY + 16) && !(notladder(newX, newY + 16)))
+		newY += 16;
+	if (currentTime - lastMoveTime >= 350) {
+		if (mlx_is_key_down(mlx, MLX_KEY_W))
+			newY -= 16;
+		if (mlx_is_key_down(mlx, MLX_KEY_S))
+			newY += 16;
+		if (mlx_is_key_down(mlx, MLX_KEY_A))
+			newX -= 16;
+		if (mlx_is_key_down(mlx, MLX_KEY_D))
+			newX += 16;
+		// Vérifier la collision avec les murs
         if (isPositionValid(newX, newY)) {
-            textureInfoArray[4].img->instances->x = newX;
-            textureInfoArray[4].img->instances->y = newY;
-            lastMoveTime = currentTime;
-        }
-    }
+            // Mettre à jour la position du personnage uniquement si la nouvelle position est valide
+			textureInfoArray[4].img->instances->x = newX;
+			textureInfoArray[4].img->instances->y = newY;
+		}
+		lastMoveTime = currentTime;
+	}
 }
 
 void initializeTextures(mlx_t* mlx) {
@@ -108,57 +85,43 @@ void initializeTextures(mlx_t* mlx) {
     textureInfoArray[5].texture = mlx_load_png("png/ladder.png");
     textureInfoArray[6].texture = mlx_load_png("png/bloc.png");
     textureInfoArray[7].texture = mlx_load_png("png/fire.png");
+    textureInfoArray[8].texture = mlx_load_png("png/barrel1.png");
+    textureInfoArray[9].texture = mlx_load_png("png/barrel2.png");
+    textureInfoArray[10].texture = mlx_load_png("png/barrel3.png");
+    textureInfoArray[11].texture = mlx_load_png("png/barrel4.png");
 
-    while (i < 8) {
+
+    while (i < 12)
+    {
         textureInfoArray[i].img = mlx_texture_to_image(mlx, textureInfoArray[i].texture);
         mlx_delete_texture(textureInfoArray[i].texture);
         i++;
     }
 }
 
-int main(void) {
+int main(void)
+{
     mlx_t* mlx;
 
     mlx = mlx_init(WIN_WIDTH, WIN_HEIGHT, "So_Long", true);
-    if (!mlx) {
+    if (!mlx)
+    {
         return 1;
     }
     initializeTextures(mlx);
     int fd = open("maps/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
 
-    if (fd == -1) {
-        perror("Error opening file");
-        return 1;
-    }
+	if (fd == -1)
+	{
+		perror("Error opening file");
+		return (1);
+	}
     aff_map(fd, mlx);
     close(fd);
-
+    // Affichage de la carte
     mlx_loop_hook(mlx, ft_hook, mlx);
-    mlx_loop(mlx);
-    mlx_terminate(mlx);
+	mlx_loop(mlx);
+	mlx_terminate(mlx);
 
-    return 0;
-}
-
-#include <math.h>
-
-#define GRAVITY 10.0
-
-typedef struct {
-    double x, y, mass;
-    double ax, ay;
-} Object;
-
-void applyGravity(Object *obj1, Object *obj2) {
-    double dx = obj2->x - obj1->x;
-    double dy = obj2->y - obj1->y;
-    double dist_sq = dx * dx + dy * dy;
-
-    double F = GRAVITY * obj1->mass * obj2->mass / dist_sq;
-
-    obj1->ax += F * dx / (obj1->mass * sqrt(dist_sq));
-    obj1->ay += F * dy / (obj1->mass * sqrt(dist_sq));
-
-    obj2->ax -= F * dx / (obj2->mass * sqrt(dist_sq));
-    obj2->ay -= F * dy / (obj2->mass * sqrt(dist_sq));
+	return 0;
 }
