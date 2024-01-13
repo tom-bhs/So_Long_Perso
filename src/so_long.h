@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/12 18:44:29 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/13 16:13:28 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,8 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include <stdbool.h>
+#include <sys/time.h> 
+#include <stdbool.h>
 
 typedef struct txt_inf{
     mlx_texture_t* texture;
