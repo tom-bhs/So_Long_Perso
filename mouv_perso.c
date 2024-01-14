@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/13 18:35:21 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:14:37 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,33 +14,33 @@
 #include "src/so_long.h"
 
 
-mlx_image_t* normal;  //facce normal = droite
-mlx_image_t* flipped; //face reverse = gauche 
+mlx_image_t* normal = NULL;
+mlx_image_t* flipped = NULL;
 
 
 void init_character_images(mlx_t* mlx) {
-    mlx_texture_t* texture_normal = mlx_load_png("png/kong2.png");
-    normal = mlx_texture_to_image(mlx, texture_normal);
-    mlx_delete_texture(texture_normal);
+	mlx_texture_t* texture_normal = mlx_load_png("png/kong2.png");
+	normal = mlx_texture_to_image(mlx, texture_normal);
+	mlx_delete_texture(texture_normal);
 
-    mlx_texture_t* texture_flipped = mlx_load_png("png/reversekong.png");
-    flipped = mlx_texture_to_image(mlx, texture_flipped);
-    mlx_delete_texture(texture_flipped);
+	mlx_texture_t* texture_flipped = mlx_load_png("png/reversekong.png");
+	flipped = mlx_texture_to_image(mlx, texture_flipped);
+	mlx_delete_texture(texture_flipped);
 }
 
 int notladder(int x, int y)
 {
-    int mapX = x / 16;
-    int mapY = y / 16;
-    if (mapy.mapp[mapY][mapX] != 'Y')
-        return 0;
-    return 1;
+	int mapX = x / 16;
+	int mapY = y / 16;
+	if (mapy.mapp[mapY][mapX] != 'Y')
+		return 0;
+	return 1;
 }
 
 unsigned long long getCurrentTimeInMilliseconds() {
-    struct timeval tv;
-    gettimeofday(&tv, NULL);
-    return (unsigned long long)(tv.tv_sec) * 1000 + (unsigned long long)(tv.tv_usec) / 1000;
+	struct timeval tv;
+	gettimeofday(&tv, NULL);
+	return (unsigned long long)(tv.tv_sec) * 1000 + (unsigned long long)(tv.tv_usec) / 1000;
 }
 
 int isPositionValid(int x, int y) {
@@ -74,16 +74,24 @@ void ft_hook(void* param)
 			newY += 16;
 		if (mlx_is_key_down(mlx, MLX_KEY_A))
 		{
-			img = flipped;
-			newX -= 16;
+		newX -= 16;
+		img = flipped;
 		}
 		if (mlx_is_key_down(mlx, MLX_KEY_D))
+		{
 			newX += 16;
-		// Vérifier la collision avec les murs
-        if (isPositionValid(newX, newY)) {
-            // Mettre à jour la position du personnage uniquement si la nouvelle position est valide
-			textureInfoArray[4].img->instances->x = newX;
-			textureInfoArray[4].img->instances->y = newY;
+			img = normal;
+		}
+		if (isPositionValid(newX, newY))
+		{
+			// Mettre à jour la position du personnage uniquement si la nouvelle position est valide
+			textureInfoArray[4].img->instances[0].x = newX;
+			textureInfoArray[4].img->instances[0].y = newY;
+
+			if (img == flipped)
+				mlx_image_to_window(mlx, flipped, newX, newY);
+			else
+				mlx_image_to_window(mlx, normal, newX, newY);
 		}
 		lastMoveTime = currentTime;
 	}

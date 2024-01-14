@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/13 16:13:28 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/14 15:46:29 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,7 +50,9 @@ void	aff_map(int fd, mlx_t *mlx);
 void	update_barrel_position(t_barrel *tonneau, int window_width, int largeur_tonneau);
 void	update_barrel_animation(t_barrel *tonneau);
 void	initialiser_tonneaux(t_barrel *tonneaux, int window_width, int start_y);
-void game_update(t_barrel *tonneaux, int window_width, int start_y);
+void	game_update(t_barrel *tonneaux, int window_width, int start_y);
+void	init_character_images(mlx_t* mlx);
+
 
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/13 16:41:25 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/14 16:19:59 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,9 @@ TextureInfo textureInfoArray[13];
 // 	}
 // }
 
+extern mlx_image_t* normal;  // Face normale = droite
+extern mlx_image_t* flipped; // Face inversée = gauche
+
 void initializeTextures(mlx_t* mlx) {
     int i = 0;
     textureInfoArray[0].texture = mlx_load_png("png/rock.png");
@@ -108,6 +111,7 @@ int main(void)
         return 1;
     }
     initializeTextures(mlx);
+	init_character_images(mlx);
     int fd = open("maps/maps.ber", O_RDONLY);  // Ouvre le fichier en lecture seule
 
 	if (fd == -1)
