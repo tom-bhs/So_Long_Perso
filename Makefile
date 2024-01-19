@@ -9,7 +9,8 @@ SRCS	:= 	test.c \
 			get_next_line_utils.c \
 			get_next_line.c \
 			mouv_perso.c \
-			#mouv_barrel.c
+			mouv_barrel.c \
+			mapValid.c \
 
 OBJS	:= ${SRCS:.c=.o}
 
