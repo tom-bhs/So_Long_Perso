@@ -6,16 +6,13 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:17:09 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/18 15:45:12 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:57:04 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "MLX42/include/MLX42/MLX42.h"
 #include "src/get_next_line.h"
 #include "src/so_long.h"
-#include <stdlib.h>
-#include <stddef.h>
-#include <stdio.h>
 
 lamap mapy;
 void aff_map(int fd, mlx_t *mlx)
@@ -39,7 +36,7 @@ void aff_map(int fd, mlx_t *mlx)
             {
                 mlx_image_to_window(mlx, textureInfoArray[3].img, x * TILE_SIZE, y * TILE_SIZE);
                 mlx_image_to_window(mlx, textureInfoArray[13].img, x * TILE_SIZE, y * TILE_SIZE);
-                textureInfoArray[13].img->enabled = false;
+				textureInfoArray[13].img->enabled = false;
             }
             if (mapy.mapp[y][x] == 'Y' ) // texture3 = echelle
                 mlx_image_to_window(mlx, textureInfoArray[5].img, x * TILE_SIZE, y * TILE_SIZE);

@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:42:43 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/18 15:45:02 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/20 17:04:24 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,10 +18,10 @@ void	mouv_right(void)
 {
 	int	i;
 
-	textureInfoArray[8].img->instances[0].x += 16;
-	textureInfoArray[9].img->instances[0].x += 16;
-	textureInfoArray[10].img->instances[0].x += 16;
-	textureInfoArray[11].img->instances[0].x += 16;
+	textureInfoArray[8].img->instances[0].x += 8;
+	textureInfoArray[9].img->instances[0].x += 8;
+	textureInfoArray[10].img->instances[0].x += 8;
+	textureInfoArray[11].img->instances[0].x += 8;
 	i = 0;
 	if (textureInfoArray[8].img->enabled == true)
 		i = 9;
@@ -36,7 +36,7 @@ void	mouv_right(void)
 	textureInfoArray[10].img->enabled = false;
 	textureInfoArray[11].img->enabled = false;
 	textureInfoArray[i].img->enabled = true;
-	mapy.vit /= 1.005;
+	mapy.vit /= 0.999;
 }
 void	mouv_left(void)
 {
@@ -60,7 +60,7 @@ void	mouv_left(void)
 	textureInfoArray[10].img->enabled = false;
 	textureInfoArray[11].img->enabled = false;
 	textureInfoArray[i].img->enabled = true;
-	mapy.vit /= 1.005;
+	mapy.vit /= 0.999;
 }
 void	mouv_down(void)
 {
@@ -84,7 +84,7 @@ void	mouv_down(void)
 	textureInfoArray[10].img->enabled = false;
 	textureInfoArray[11].img->enabled = false;
 	textureInfoArray[i].img->enabled = true;
-	mapy.vit /= 1.005;
+	mapy.vit /= 0.999;
 }
 
 void	mouvBarrel(void)
@@ -104,7 +104,7 @@ void	mouvBarrel(void)
 			&& ((textureInfoArray[8].img->instances[0].x + 32) % 32 == 0))
         {
 			mouv_down();
-            mapy.vit = 50;
+            mapy.vit = 30;
         }
 		else if (isPositionValid(textureInfoArray[8].img->instances[0].x - 8,
 				textureInfoArray[8].img->instances[0].y))

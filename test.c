@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/19 14:01:53 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/19 17:09:59 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,10 +14,7 @@
 #include "src/get_next_line.h"
 #include "src/so_long.h"
 
-#define WIN_WIDTH 1248
-#define WIN_HEIGHT 512
-
-TextureInfo textureInfoArray[15];
+TextureInfo textureInfoArray[27];
 
 extern mlx_image_t* normal;  // Face normale = droite
 extern mlx_image_t* flipped; // Face inversée = gauche
@@ -39,8 +36,20 @@ void initializeTextures(mlx_t* mlx) {
     textureInfoArray[12].texture = mlx_load_png("png/reversekong32.png");
     textureInfoArray[13].texture = mlx_load_png("png/dooropen32.png");
     textureInfoArray[14].texture = mlx_load_png("png/blast32.png");
+	textureInfoArray[15].texture = mlx_load_png("png/end1.png");
+	textureInfoArray[16].texture = mlx_load_png("png/end2.png");
+	textureInfoArray[17].texture = mlx_load_png("png/end3.png");
+	textureInfoArray[18].texture = mlx_load_png("png/end4.png");
+	textureInfoArray[19].texture = mlx_load_png("png/end5.png");
+	textureInfoArray[20].texture = mlx_load_png("png/end6.png");
+	textureInfoArray[21].texture = mlx_load_png("png/end7.png");
+	textureInfoArray[22].texture = mlx_load_png("png/end8.png");
+	textureInfoArray[23].texture = mlx_load_png("png/end9.png");
+	textureInfoArray[24].texture = mlx_load_png("png/end10.png");
+	textureInfoArray[25].texture = mlx_load_png("png/end11.png");
+	textureInfoArray[26].texture = mlx_load_png("png/end12.png");
 
-	while (i < 15)
+	while (i < 27)
 	{
 		textureInfoArray[i].img = mlx_texture_to_image(mlx, textureInfoArray[i].texture);
 		mlx_delete_texture(textureInfoArray[i].texture);
