@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/19 17:09:59 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:21:34 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,13 @@
 #include "src/get_next_line.h"
 #include "src/so_long.h"
 
-TextureInfo textureInfoArray[27];
+TextureInfo textureInfoArray[28];
 
 extern mlx_image_t* normal;  // Face normale = droite
 extern mlx_image_t* flipped; // Face inversée = gauche
 
-void initializeTextures(mlx_t* mlx) {
+void initializeTextures(mlx_t* mlx)
+{
     int i = 0;
     textureInfoArray[0].texture = mlx_load_png("png/rock32.png");
     textureInfoArray[1].texture = mlx_load_png("png/back32.png");
@@ -48,8 +49,10 @@ void initializeTextures(mlx_t* mlx) {
 	textureInfoArray[24].texture = mlx_load_png("png/end10.png");
 	textureInfoArray[25].texture = mlx_load_png("png/end11.png");
 	textureInfoArray[26].texture = mlx_load_png("png/end12.png");
+    textureInfoArray[27].texture = mlx_load_png("png/over.png");
 
-	while (i < 27)
+
+	while (i < 28)
 	{
 		textureInfoArray[i].img = mlx_texture_to_image(mlx, textureInfoArray[i].texture);
 		mlx_delete_texture(textureInfoArray[i].texture);

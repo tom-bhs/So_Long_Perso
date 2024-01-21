@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/19 18:25:11 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:21:38 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,8 +26,7 @@
 # include "../MLX42/include/MLX42/MLX42.h"
 # include "get_next_line.h"
 # include <stdbool.h>
-#include <sys/time.h> 
-#include <stdbool.h>
+#include <sys/time.h>
 
 typedef struct txt_inf{
     mlx_texture_t* texture;
@@ -49,7 +48,7 @@ typedef struct s_barrel{
 } t_barrel;
 
 extern lamap mapy;
-extern TextureInfo textureInfoArray[27];
+extern TextureInfo textureInfoArray[28];
 
 void	ft_hook(void* param); 
 int		main(void);
@@ -65,8 +64,6 @@ int	    notladder(int x, int y);
 void    mouvBarrel(void);
 unsigned long long  getCurrentTimeInMilliseconds(void);
 void    isMapValid();
-void    wait(void);
-void	finish(void);
-
+void    animate_next_frame(void *param);
 
 #endif

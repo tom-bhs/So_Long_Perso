@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/20 19:30:40 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/21 21:08:46 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,25 +93,30 @@ int	isPositionValid(int x, int y)
 	return (0);
 }
 
-// void	finish(void *param)
-// {
-// 		int							newX;
-// 		int							newY;
-// 		mlx_t						*mlx;
-// 		newX = textureInfoArray[4].img->instances->x;
-// 		newY = textureInfoArray[4].img->instances->y;
-// 		mlx = param;
 
+// void animate_next_frame(void *param)
+// {
+// 	mlx_t *mlx = param;
+// 	int x = 0;
+// 	int y = 0;
+// 	int	newX;
+// 	int	newY;
+
+// 	newX = textureInfoArray[4].img->instances->x;
+// 	newY = textureInfoArray[4].img->instances->y;
+
+// 	if (textureInfoArray[8].img->instances->x == textureInfoArray[4].img->instances->x 
+// 	&& textureInfoArray[8].img->instances->y == textureInfoArray[4].img->instances->y)
+// 	{
 // 		mlx_image_to_window(mlx, textureInfoArray[14].img, newX, newY);
-// 		mlx_image_to_window(mlx, textureInfoArray[15].img, newX, newY);
-// 		mlx_image_to_window(mlx, textureInfoArray[16].img, newX, newY);
-// 		mlx_close_window(mlx);
+// 		mlx_resize_image(textureInfoArray[15].img, WIN_WIDTH, WIN_HEIGHT);
+// 		mlx_image_to_window(mlx, textureInfoArray[15].img, x, y);
+// 		mlx_resize_image(textureInfoArray[16].img, WIN_WIDTH, WIN_HEIGHT);
+// 		mlx_image_to_window(mlx, textureInfoArray[16].img, x, y);
+// 		//mlx_close_window(mlx);
+// 	}
 // }
 
-void wait(void)
-{
-	usleep(900000);
-}
 
 void	ft_hook(void *param)
 {
@@ -122,9 +127,6 @@ void	ft_hook(void *param)
 	unsigned long long			currentTime;
 	int							newX;
 	int							newY;
-
-	int x = 0;
-	int y = 0;
 	
 	mlx = param;
 	currentTime = getCurrentTimeInMilliseconds();
@@ -132,61 +134,19 @@ void	ft_hook(void *param)
 		mlx_close_window(mlx);
 	newX = textureInfoArray[4].img->instances->x;
 	newY = textureInfoArray[4].img->instances->y;
-	// mlx_put_image_to_window(mlx, mlx->win, img, newX, newY);
 	collectible();
     mouvBarrel();
-	// finish();
-	if	(textureInfoArray[8].img->instances->x == textureInfoArray[4].img->instances->x 
-	&& textureInfoArray[8].img->instances->y == textureInfoArray[4].img->instances->y)
-	{
-		mlx_image_to_window(mlx, textureInfoArray[14].img, newX, newY);
-		//wait();
-		//mlx_close_window(mlx);
-		mlx_resize_image(textureInfoArray[15].img, WIN_WIDTH, WIN_HEIGHT);
-		mlx_image_to_window(mlx, textureInfoArray[15].img, x, y);
-		mlx_close_window(mlx);
-		// mlx_resize_image(textureInfoArray[16].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[16].img, x, y);
-		// wait();
-		// mlx_resize_image(textureInfoArray[17].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[17].img, x, y);
-		// wait();
-		// mlx_resize_image(textureInfoArray[18].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[18].img, x, y);
-		// wait();
-		// mlx_resize_image(textureInfoArray[19].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[19].img, x, y);
-		// wait();
-		// mlx_resize_image(textureInfoArray[20].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[20].img, x, y);
-		// wait();
-		// mlx_resize_image(textureInfoArray[21].img, WIN_WIDTH, WIN_HEIGHT);
-		// mlx_image_to_window(mlx, textureInfoArray[21].img, x, y);
-		
-		//mlx_resize_image(textureInfoArray[15].img, 1224, 512);
-		// mlx_image_to_window(mlx, textureInfoArray[16].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[17].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[18].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[19].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[20].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[21].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[22].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[23].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[24].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[25].img, x , y);
-		// mlx_image_to_window(mlx, textureInfoArray[26].img, x , y);
-		//mlx_close_window(mlx);
-	}
+	mlx_loop_hook(mlx, animate_next_frame, mlx);
 	if (!isPositionValid(newX, newY + 32) || notladder(newX, newY)
 		|| notladder(newX, newY + 32))
 	{
 		mapy.gravity = 1;
 	}
-	if (mapy.mapp[newY / 32][newX / 32] == 'E'
-		&& (textureInfoArray[2].img->count == mapy.nb_c))
-	{
-		mlx_close_window(mlx);
-	}
+	// if (mapy.mapp[newY / 32][newX / 32] == 'E'
+	// 	&& (textureInfoArray[2].img->count == mapy.nb_c))
+	// {
+	// 	mlx_close_window(mlx);
+	// }
 	if (isPositionValid(newX, newY + 32) && !(notladder(newX, newY + 32))
 		&& currentTime - lastMoveTime >= 99)
 	{
@@ -202,8 +162,7 @@ void	ft_hook(void *param)
 		else
 			newY += 32;
 	}
-	if (currentTime - lastMoveTime >= 100
-	)
+	if (currentTime - lastMoveTime >= 100)
 	{
 		if (mlx_is_key_down(mlx, MLX_KEY_W) && mapy.gravity == 1)
 		{
