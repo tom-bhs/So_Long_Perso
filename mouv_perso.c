@@ -6,11 +6,10 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/21 21:08:46 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:17:28 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
 #include "src/so_long.h"
 
 mlx_image_t			*normal;
@@ -93,31 +92,6 @@ int	isPositionValid(int x, int y)
 	return (0);
 }
 
-
-// void animate_next_frame(void *param)
-// {
-// 	mlx_t *mlx = param;
-// 	int x = 0;
-// 	int y = 0;
-// 	int	newX;
-// 	int	newY;
-
-// 	newX = textureInfoArray[4].img->instances->x;
-// 	newY = textureInfoArray[4].img->instances->y;
-
-// 	if (textureInfoArray[8].img->instances->x == textureInfoArray[4].img->instances->x 
-// 	&& textureInfoArray[8].img->instances->y == textureInfoArray[4].img->instances->y)
-// 	{
-// 		mlx_image_to_window(mlx, textureInfoArray[14].img, newX, newY);
-// 		mlx_resize_image(textureInfoArray[15].img, WIN_WIDTH, WIN_HEIGHT);
-// 		mlx_image_to_window(mlx, textureInfoArray[15].img, x, y);
-// 		mlx_resize_image(textureInfoArray[16].img, WIN_WIDTH, WIN_HEIGHT);
-// 		mlx_image_to_window(mlx, textureInfoArray[16].img, x, y);
-// 		//mlx_close_window(mlx);
-// 	}
-// }
-
-
 void	ft_hook(void *param)
 {
 	mlx_t						*mlx;
@@ -136,17 +110,12 @@ void	ft_hook(void *param)
 	newY = textureInfoArray[4].img->instances->y;
 	collectible();
     mouvBarrel();
-	mlx_loop_hook(mlx, animate_next_frame, mlx);
+	if (textureInfoArray[8].img->instances->x == textureInfoArray[4].img->instances->x 
+		&& textureInfoArray[8].img->instances->y == textureInfoArray[4].img->instances->y)
+			mlx_loop_hook(mlx, animate_next_frame, mlx);
 	if (!isPositionValid(newX, newY + 32) || notladder(newX, newY)
 		|| notladder(newX, newY + 32))
-	{
-		mapy.gravity = 1;
-	}
-	// if (mapy.mapp[newY / 32][newX / 32] == 'E'
-	// 	&& (textureInfoArray[2].img->count == mapy.nb_c))
-	// {
-	// 	mlx_close_window(mlx);
-	// }
+			mapy.gravity = 1;
 	if (isPositionValid(newX, newY + 32) && !(notladder(newX, newY + 32))
 		&& currentTime - lastMoveTime >= 99)
 	{

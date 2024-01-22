@@ -6,12 +6,10 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 18:17:09 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/19 17:57:04 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:18:30 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "src/get_next_line.h"
 #include "src/so_long.h"
 
 lamap mapy;

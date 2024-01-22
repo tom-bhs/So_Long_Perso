@@ -6,12 +6,10 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/08 16:51:52 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/21 21:21:34 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:18:49 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "src/get_next_line.h"
 #include "src/so_long.h"
 
 TextureInfo textureInfoArray[28];

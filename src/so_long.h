@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/21 21:21:38 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/01/22 17:26:09 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,15 +18,16 @@
 #define WIN_WIDTH 1248
 #define WIN_HEIGHT 512
 
+# include "../MLX42/include/MLX42/MLX42.h"
+# include "get_next_line.h"
+
 # include <stdio.h>
 # include <unistd.h>
 # include <stdlib.h>
 # include <fcntl.h>
 # include <string.h>
-# include "../MLX42/include/MLX42/MLX42.h"
-# include "get_next_line.h"
 # include <stdbool.h>
-#include <sys/time.h>
+# include <sys/time.h>
 
 typedef struct txt_inf{
     mlx_texture_t* texture;
