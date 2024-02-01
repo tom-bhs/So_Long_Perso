@@ -6,11 +6,11 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/12 15:42:43 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/22 17:17:39 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:34:55 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/so_long.h"
+#include "../inc/so_long.h"
 
 void	mouv_right(void)
 {

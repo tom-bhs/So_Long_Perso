@@ -6,7 +6,7 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:24:31 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/22 17:26:09 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:42:56 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@
 # include <string.h>
 # include <stdbool.h>
 # include <sys/time.h>
+# include <time.h>
 
 typedef struct txt_inf{
     mlx_texture_t* texture;
@@ -61,10 +62,10 @@ void	initialiser_tonneaux(t_barrel *tonneaux, int window_width, int start_y);
 void	game_update(t_barrel *tonneaux, int window_width, int start_y);
 void	collectible(void);
 bool	jump(int x, int y);
-int	    notladder(int x, int y);
-void    mouvBarrel(void);
+int		notladder(int x, int y);
+void	mouvBarrel(void);
 unsigned long long  getCurrentTimeInMilliseconds(void);
-void    isMapValid();
-void    animate_next_frame(void *param);
+void	isMapValid();
+void	animate_next_frame(void *param);
 
 #endif

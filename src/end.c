@@ -6,14 +6,11 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/01/19 17:56:16 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/22 16:36:18 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:40:04 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "MLX42/include/MLX42/MLX42.h"
-#include "src/get_next_line.h"
-#include "src/so_long.h"
-//#include "mouv_perso.c"
+#include "../inc/so_long.h"
 
 void frame_1(void *param)
 {
@@ -156,39 +153,7 @@ void	frame_14(void *param) // game over
 
 void (*frame_functions[])(void *) = {frame_1, frame_2, frame_3, frame_4, frame_5, frame_6, frame_7, frame_8, frame_9, frame_10, frame_11, frame_12, frame_13, frame_14};
 
-#include <time.h>
-
-// void animate_next_frame(void *param)
-// {
-//     static int frame = 0;
-//     static clock_t last_update = 0;
-//     mlx_t *mlx = param;
-//     clock_t now = clock();
-// 	int							newX;
-// 	int							newY;
-// 	newX = textureInfoArray[4].img->instances->x;
-// 	newY = textureInfoArray[4].img->instances->y;
-
-//     if ((double)(now - last_update) / CLOCKS_PER_SEC > 0.1)  // 0.5 seconds delay
-//     {
-//         if (textureInfoArray[8].img->instances->x == textureInfoArray[4].img->instances->x 
-//         && textureInfoArray[8].img->instances->y == textureInfoArray[4].img->instances->y)
-//         {
-// 		frame_functions[frame](mlx);
-// 		frame = (frame + 1) % (sizeof(frame_functions) / sizeof(frame_functions[0]));
-//         }
-// 		if (mapy.mapp[newY / 32][newX / 32] == 'E'
-// 		&& (textureInfoArray[2].img->count == mapy.nb_c))
-// 		{
-// 			mlx_image_to_window(mlx, textureInfoArray[14].img, newX, newY);
-// 			mlx_close_window(mlx);
-// 		}
-//         last_update = now;
-//     }
-// }
-
-
-void animate_next_frame(void *param)
+void	animate_next_frame(void *param)
 {
 	static int frame = 0;
 	static clock_t last_update = 0;

@@ -6,11 +6,11 @@
 /*   By: tbihoues <tbihoues@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/12/11 17:20:56 by tbihoues          #+#    #+#             */
-/*   Updated: 2024/01/22 17:17:28 by tbihoues         ###   ########.fr       */
+/*   Updated: 2024/02/01 14:34:54 by tbihoues         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "src/so_long.h"
+#include "../inc/so_long.h"
 
 mlx_image_t			*normal;
 mlx_image_t			*flipped;
